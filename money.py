@@ -15,12 +15,21 @@ class Currency:
         - symbol - optional symbol used to designate currency
         - digits -- number of significant digits used
         """
+        self.name = name 
+        self.code = code
+        self.symbol = symbol
+        self.digits = digits
         pass
+
 
     def __str__(self):
         """
         Should return the currency code, or code with symbol in parentheses.
         """
+        if self.symbol is not None:
+            return f"{(self.symbol)} + {self.scode}"
+        else:
+            return f"{self.code}"
         pass
 
     def __eq__(self, other):
@@ -43,6 +52,8 @@ class Money:
         - amount -- quantity of currency
         - currency -- type of currency
         """
+        self.amount = amount
+        self.currency = currency
         pass
 
     def __str__(self):
@@ -70,23 +81,35 @@ class Money:
         Add two money objects of the same currency. If they have different
         currencies, raise a DifferentCurrencyError.
         """
-        pass
+    
+        if self.currency == other.currency:
+            return Money(self.amount + other.amount, self.currency)
+        else:
+            raise DifferentCurrencyError()
 
     def sub(self, other):
         """
         Subtract two money objects of the same currency. If they have different
         currencies, raise a DifferentCurrencyError.
         """
-        pass
+    
+        if self.currency == other.currency:
+            return Money(self.amount - other.amount, self.currency)
+        else:
+             raise DifferentCurrencyError()
 
     def mul(self, multiplier):
         """
         Multiply a money object by a number to get a new money object.
         """
-        pass
+        product = Money(0, self.currency)
+        product.amount = (self.amount * multiplier)
+        return product
 
     def div(self, divisor):
         """
         Divide a money object by a number to get a new money object.
         """
-        pass
+        quotient = Money(0, self.currency)
+        quotient.amount = (self.amount/divisor)
+        return quotient
